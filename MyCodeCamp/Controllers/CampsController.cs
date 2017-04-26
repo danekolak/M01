@@ -40,5 +40,7 @@ namespace MyCodeCamp.Controllers
             }
             return BadRequest();
         }
+
+        private int n = 3;
     }
 }
