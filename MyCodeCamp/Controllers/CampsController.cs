@@ -39,9 +39,6 @@ namespace MyCodeCamp.Controllers
             {
             }
             return BadRequest();
-
         }
-
-        private int number = 3;
     }
 }
