@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyCodeCamp.Data;
-using MyCodeCamp.Data.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,11 +28,11 @@ namespace MyCodeCamp.Controllers
         {
             try
             {
-                Camp camp = includeSpeakers == false ? _repo.GetCampWithSpeakers(id) : _repo.GetCamp(id);
+                var camp = includeSpeakers == false ? _repo.GetCampWithSpeakers(id) : _repo.GetCamp(id);
 
 
                 if (camp == null) return NotFound($"Camp {id} was not found");
-
+                //commit git
                 return Ok(camp);
             }
             catch
