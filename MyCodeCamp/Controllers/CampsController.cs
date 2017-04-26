@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyCodeCamp.Data;
+using MyCodeCamp.Data.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,12 +25,15 @@ namespace MyCodeCamp.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id, bool includeSpeakers = false)
         {
             try
             {
-                var camp = _repo.GetCamp(id);
-                if (camp == null) return NotFound();
+                Camp camp = includeSpeakers == false ? _repo.GetCampWithSpeakers(id) : _repo.GetCamp(id);
+
+
+                if (camp == null) return NotFound($"Camp {id} was not found");
+
                 return Ok(camp);
             }
             catch
