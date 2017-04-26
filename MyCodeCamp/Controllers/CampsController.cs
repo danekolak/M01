@@ -29,6 +29,7 @@ namespace MyCodeCamp.Controllers
             try
             {
                 var camp = includeSpeakers == false ? _repo.GetCampWithSpeakers(id) : _repo.GetCamp(id);
+                var n = 3;
 
 
                 if (camp == null) return NotFound($"Camp {id} was not found");
