@@ -61,7 +61,7 @@ namespace MyCodeCamp.Controllers
                     var newUri = Url.Link("CampGet", new { id = model.Id });
                     return Created(newUri, model);
                 }
-                // _logger.LogWarning("Could not save Camp to the database");
+                _logger.LogWarning("Could not save Camp to the database");
             }
             catch (Exception ex)
             {
