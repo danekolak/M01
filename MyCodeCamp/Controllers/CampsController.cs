@@ -4,42 +4,49 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyCodeCamp.Data;
 using MyCodeCamp.Data.Entities;
+using AutoMapper;
+using MyCodeCamp.Models;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyCodeCamp.Controllers
 {
     [Route("api/camps")]
-    public class CampsController : Controller
+    public class CampsController : BaseController
     {
         private readonly ILogger<CampsController> _logger;
         private readonly ICampRepository _repo;
+        private IMapper _mapper;
 
-        public CampsController(ICampRepository repo, ILogger<CampsController> logger)
+        public CampsController(ICampRepository repo, ILogger<CampsController> logger, IMapper mapper)
         {
             _repo = repo;
             _logger = logger;
+            _mapper = mapper;
         }
+
+       
 
         [HttpGet("")]
         public IActionResult Get()
         {
             var camps = _repo.GetAllCamps();
 
-            return Ok(camps);
+            return Ok(_mapper.Map<IEnumerable<CampModel>>(camps));
         }
 
         [HttpGet("{id}", Name = "CampGet")]
         public IActionResult Get(int id, bool includeSpeakers = false)
         {
             try
-            {
+            {                  
+                
                 var camp = includeSpeakers == false ? _repo.GetCampWithSpeakers(id) : _repo.GetCamp(id);
-
-
                 if (camp == null) return NotFound($"Camp {id} was not found");
 
-                return Ok(camp);
+                return Ok(_mapper.Map<CampModel>(camp, opt => opt.Items["UrlHelper"]=this.Url));
             }
             catch
             {
