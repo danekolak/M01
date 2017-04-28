@@ -19,11 +19,7 @@ namespace MyCodeCamp.Models
                 .ForMember(c =>c.EndDate,
                 opt => opt.ResolveUsing(camp => camp.EventDate.AddDays(camp.Length-1)))
                 .ForMember(c=>c.Url,
-                opt=>opt.ResolveUsing((camp, model, unused, ctx) =>
-                {
-                    var url = (IUrlHelper)ctx.Items["UrlHelper"];
-                    return url.Link("CampGet", new { id = camp.Id });
-                }))
+                opt=>opt.ResolveUsing<CampUrlResolver>())
                 ;
         }
     }

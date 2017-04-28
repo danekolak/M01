@@ -37,14 +37,14 @@ namespace MyCodeCamp.Controllers
             return Ok(_mapper.Map<IEnumerable<CampModel>>(camps));
         }
 
-        [HttpGet("{id}", Name = "CampGet")]
-        public IActionResult Get(int id, bool includeSpeakers = false)
+        [HttpGet("{moniker}", Name = "CampGet")]
+        public IActionResult Get(string moniker, bool includeSpeakers = false)
         {
             try
             {                  
                 
-                var camp = includeSpeakers == false ? _repo.GetCampWithSpeakers(id) : _repo.GetCamp(id);
-                if (camp == null) return NotFound($"Camp {id} was not found");
+                var camp = includeSpeakers == false ? _repo.GetCampByMonikerWithSpeakers(moniker) : _repo.GetCampByMoniker(moniker);
+                if (camp == null) return NotFound($"Camp {moniker} was not found");
 
                 return Ok(_mapper.Map<CampModel>(camp, opt => opt.Items["UrlHelper"]=this.Url));
             }
