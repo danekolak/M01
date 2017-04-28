@@ -24,6 +24,7 @@ namespace MyCodeCamp.Models
         {
             var url = (IUrlHelper)_httpContextAccessor.HttpContext.Items[BaseController.URLHELPER];
             return url.Link("CampGet", new { moniker = source.Moniker });
+            //dfdsfsafddsadfasf
         }
     }
 }
